@@ -97,15 +97,10 @@ resource "aws_route_table_association" "e" {
     route_table_id = aws_route_table.rta-pri.id
 }
 
-resource "aws_route_table_association" "f" {
-    subnet_id = data.aws_subnet.pub-subnet6.id
-    route_table_id = aws_route_table.rta-pri.id
-}
-
-#resource "aws_route" "pri-route1" {
+###### NEED THIS SUBNET ASSOCIATION, BUT ERROR COMING  . . .  . . 
+#resource "aws_route_table_association" "f" {
+#    subnet_id = data.aws_subnet.pub-subnet6.id
 #    route_table_id = aws_route_table.rta-pri.id
-#    destination_cidr_block = "0.0.0.0/0"
-#    gateway_id = aws_nat_gateway.nat.id
 #}
 
 resource "aws_route" "pri-route1" {
@@ -114,7 +109,7 @@ resource "aws_route" "pri-route1" {
     gateway_id = aws_nat_gateway.nat.id
 
     depends_on = [
-       aws_route.pub-route1
+       aws_route_table.rta-pri
     ]
 }
 

@@ -78,8 +78,14 @@ variable "bastionaz" {
     default = "us-east-1a"
 }
 
-variable "env" {
+variable "env-bastion" {
     default = "dev"
 }
 
+variable "env-web" {
+    default = "web"
+}
 
+variable "env-db" {
+    default = "db"
+}
