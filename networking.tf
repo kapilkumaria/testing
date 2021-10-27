@@ -102,10 +102,33 @@ resource "aws_route_table_association" "f" {
     route_table_id = aws_route_table.rta-pri.id
 }
 
+#resource "aws_route" "pri-route1" {
+#    route_table_id = aws_route_table.rta-pri.id
+#    destination_cidr_block = "0.0.0.0/0"
+#    gateway_id = aws_nat_gateway.nat.id
+#}
+
 resource "aws_route" "pri-route1" {
     route_table_id = aws_route_table.rta-pri.id
     destination_cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat.id
+
+    depends_on = [
+       aws_route.pub-route1
+    ]
 }
 
+
+
+/*resource "aws_route" "pri-route1" {
+    route_table_id = aws_route_table.rta-pri.id
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.nat.id
+
+    depends_on = [
+       aws_nat_gateway.nat,
+       aws_route.pub-route1
+    ]
+}
+*/
 #################################### End #######################################################

@@ -59,3 +59,27 @@ variable "ingressrulesweb" {
 }
 */  
 
+variable "ec2-ami" {
+    type = map
+
+    default = {
+        us-east-1 = "ami-02e136e904f3da870"
+        us-east-2 = "ami-074cce78125f09d61"
+        us-west-1 = "ami-03ab7423a204da002"
+        us-west-2 = "ami-013a129d325529d4d"
+    }
+}
+
+variable "instance-type" {
+    default = "t2.micro"
+}
+
+variable "bastionaz" {
+    default = "us-east-1a"
+}
+
+variable "env" {
+    default = "dev"
+}
+
+
