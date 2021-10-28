@@ -66,6 +66,17 @@ data "aws_subnet" "pub-subnet6" {
     ]
 }
 
+data "aws_subnet" "pub-subnets" {
+    filter {
+        name = "tag:Name"
+        values = ["Subnet 1"]
+    }
+
+    depends_on = [
+        aws_subnet.subnets
+    ]
+}
+
 /*data "aws_security_groups" "bastionsg" {
     filter {
         name = "tag:Name"

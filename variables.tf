@@ -89,3 +89,7 @@ variable "env-web" {
 variable "env-db" {
     default = "db"
 }
+
+variable "lb-name" {
+    default = "my-alb"
+}
