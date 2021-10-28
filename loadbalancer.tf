@@ -3,8 +3,20 @@ resource "aws_lb" "alb" {
     internal = false
     load_balancer_type = "application"
     security_groups = [aws_security_group.albsg.id]
-    subnets = [data.aws_subnet.pub-subnets.id]
+    
+    subnet_mapping {
+        #count = data.aws_availability_zones.id
+        #subnet_id = "data.aws_availability_zones.azs"
+        subnet_id = aws_subnet.subnets[0].id
+    } 
 
+    subnet_mapping {
+        #count = data.aws_availability_zones.id
+        #subnet_id = "data.aws_availability_zones.azs"
+        subnet_id = aws_subnet.subnets[1].id
+
+    } 
+    
     enable_deletion_protection = true
 
     

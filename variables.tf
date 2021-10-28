@@ -93,3 +93,11 @@ variable "env-db" {
 variable "lb-name" {
     default = "my-alb"
 }
+
+variable "subnet1a_public" {
+    default = "us-east-1a"
+}
+
+variable "subnet1b_public" {
+    default = "us-east-1b"
+}
