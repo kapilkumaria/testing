@@ -101,3 +101,7 @@ variable "subnet1a_public" {
 variable "subnet1b_public" {
     default = "us-east-1b"
 }
+
+variable "tf1-tag" {
+    default = "mytf"
+}

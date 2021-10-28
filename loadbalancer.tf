@@ -17,21 +17,34 @@ resource "aws_lb" "myalb" {
 
     } 
     
-    enable_deletion_protection = true
+    #enable_deletion_protection = true
 }
 
 resource "aws_lb_target_group" "mytg" {
-  name     = "tf-example-lb-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = aws_vpc.projectvpc.id
-}
+    health_check {
+        interval = 10
+        path = "/"
+        protocol = "HTTP"
+        timeout = 5
+        healthy_threshold = 5
+        unhealthy_threshold = 2 
+    }
+        name     = "tf-example-lb-tg"
+        port     = 80
+        protocol = "HTTP"
+        vpc_id   = aws_vpc.projectvpc.id
+
+        tags = {
+            Name = var.tf1-tag
+        }
+    }
+
 
 resource "aws_lb_listener" "mylistener" {
   load_balancer_arn = aws_lb.myalb.arn 
   port = 80
   protocol = "HTTP"
-  
+
   default_action {
      target_group_arn = aws_lb_target_group.mytg.arn
      type = "forward"
