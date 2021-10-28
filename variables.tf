@@ -63,7 +63,7 @@ variable "ec2-ami" {
     type = map
 
     default = {
-        us-east-1 = "ami-02e136e904f3da870"
+        us-east-1 = "ami-09e67e426f25ce0d7"
         us-east-2 = "ami-074cce78125f09d61"
         us-west-1 = "ami-03ab7423a204da002"
         us-west-2 = "ami-013a129d325529d4d"
@@ -102,6 +102,22 @@ variable "subnet1b_public" {
     default = "us-east-1b"
 }
 
-variable "tf1-tag" {
-    default = "mytf"
+variable "tf-images" {
+    default = "tg-images"
+}
+
+variable "tf-logfiles" {
+    default = "tg-logfiles"
+}
+
+variable "script1" {
+    default = "webserver-images.sh"
+}
+
+variable "script2" {
+    default = "webserver-logfiles.sh"
+}
+
+variable "key-name" {
+    default = "yyc"
 }

@@ -20,46 +20,113 @@ resource "aws_lb" "myalb" {
     #enable_deletion_protection = true
 }
 
-resource "aws_lb_target_group" "mytg" {
+#======================================================================================================
+
+resource "aws_lb_target_group" "mytg-images" {
     health_check {
         interval = 10
-        path = "/"
+        path = "/images/image1"
         protocol = "HTTP"
         timeout = 5
         healthy_threshold = 5
         unhealthy_threshold = 2 
     }
-        name     = "tf-example-lb-tg"
+        name     = "tf-images"
         port     = 80
         protocol = "HTTP"
         vpc_id   = aws_vpc.projectvpc.id
 
         tags = {
-            Name = var.tf1-tag
+            Name = var.tf-images
         }
-    }
+}
 
 
-resource "aws_lb_listener" "mylistener" {
+resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.myalb.arn 
   port = 80
   protocol = "HTTP"
 
   default_action {
-     target_group_arn = aws_lb_target_group.mytg.arn
+     target_group_arn = aws_lb_target_group.mytg-images.arn
      type = "forward"
   }
 }
 
+resource "aws_lb_listener_rule" "images" {
+    listener_arn = aws_lb_listener.listener.arn
+    priority = 100
+
+    action {
+        type = "forward"
+        target_group_arn = aws_lb_target_group.mytg-images.arn
+    }
+
+    condition {
+        path_pattern {
+            values = ["/images/*"]
+        }
+    }
+}
+
 resource "aws_alb_target_group_attachment" "ec2_web1_attach" {
-    target_group_arn = aws_lb_target_group.mytg.arn
+    target_group_arn = aws_lb_target_group.mytg-images.arn
     target_id = aws_instance.webserver1.id
-    port = 3000
+    #port = 3000
+}
+
+#======================================================================================================
+
+resource "aws_lb_target_group" "mytg-logfiles" {
+    health_check {
+        interval = 10
+        path = "/logfiles/log1"
+        protocol = "HTTP"
+        timeout = 5
+        healthy_threshold = 5
+        unhealthy_threshold = 2 
+    }
+        name     = "tg-logfiles"
+        port     = 80
+        protocol = "HTTP"
+        vpc_id   = aws_vpc.projectvpc.id
+
+        tags = {
+            Name = var.tf-logfiles
+        }
 }
 
 
+/*resource "aws_lb_listener" "logfiles-listener" {
+  load_balancer_arn = aws_lb.myalb.arn 
+  port = 80
+  protocol = "HTTP"
+
+  default_action {
+     target_group_arn = aws_lb_target_group.mytg-logfiles.arn
+     type = "forward"
+  }
+}
+*/
+
+resource "aws_lb_listener_rule" "logfiles" {
+    listener_arn = aws_lb_listener.listener.arn
+    priority = 200
+
+    action {
+        type = "forward"
+        target_group_arn = aws_lb_target_group.mytg-logfiles.arn
+    }
+
+    condition {
+        path_pattern {
+            values = ["/logfiles/*"]
+        }
+    }
+}
+
 resource "aws_alb_target_group_attachment" "ec2_web2_attach" {
-    target_group_arn = aws_lb_target_group.mytg.arn
+    target_group_arn = aws_lb_target_group.mytg-logfiles.arn
     target_id = aws_instance.webserver2.id
-    port = 3000
+    #port = 3000
 }
