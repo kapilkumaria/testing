@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "mytg-images" {
 }
 
 
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener" "listener-images" {
   load_balancer_arn = aws_lb.myalb.arn 
   port = 80
   protocol = "HTTP"
@@ -54,7 +54,7 @@ resource "aws_lb_listener" "listener" {
 }
 
 resource "aws_lb_listener_rule" "images" {
-    listener_arn = aws_lb_listener.listener.arn
+    listener_arn = aws_lb_listener.listener-images.arn
     priority = 100
 
     action {
@@ -96,8 +96,8 @@ resource "aws_lb_target_group" "mytg-logfiles" {
         }
 }
 
-
-/*resource "aws_lb_listener" "logfiles-listener" {
+/*
+resource "aws_lb_listener" "listener-logfiles" {
   load_balancer_arn = aws_lb.myalb.arn 
   port = 80
   protocol = "HTTP"
@@ -110,7 +110,7 @@ resource "aws_lb_target_group" "mytg-logfiles" {
 */
 
 resource "aws_lb_listener_rule" "logfiles" {
-    listener_arn = aws_lb_listener.listener.arn
+    listener_arn = aws_lb_listener.listener-images.arn
     priority = 200
 
     action {
