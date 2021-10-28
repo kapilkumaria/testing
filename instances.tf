@@ -13,8 +13,8 @@ resource "aws_instance" "bastionec2" {
     }
 }
 
-resource "aws_instance" "webserver" {
-    count = var.env-web == "web" ? 1 : 0
+resource "aws_instance" "webserver1" {
+    #count = var.env-web == "web" ? 1 : 0
 
     ami = lookup(var.ec2-ami,var.region)
     instance_type = var.instance-type
@@ -24,11 +24,26 @@ resource "aws_instance" "webserver" {
     security_groups = [aws_security_group.websg.id]
 
     tags = {
-        Name = "web server"
+        Name = "web server - 1"
     }
 }    
 
-resource "aws_instance" "dbserver" {
+resource "aws_instance" "webserver2" {
+    #count = var.env-web == "web" ? 1 : 0
+
+    ami = lookup(var.ec2-ami,var.region)
+    instance_type = var.instance-type
+    associate_public_ip_address = "true"
+    #subnet_id = "aws_subnet.subnets[count.index].[0]"
+    subnet_id = data.aws_subnet.pub-subnet2.id
+    security_groups = [aws_security_group.websg.id]
+
+    tags = {
+        Name = "web server - 2"
+    }
+}    
+
+resource "aws_instance" "dbserver1" {
     count = var.env-db == "db" ? 1 : 0
 
     ami = lookup(var.ec2-ami,var.region)

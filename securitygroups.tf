@@ -70,6 +70,14 @@ resource "aws_security_group" "websg" {
         security_groups = [aws_security_group.albsg.id]
         description = "test"
     } 
+
+    ingress {
+        from_port = 3000
+        to_port = 3000
+        protocol = "TCP"
+        security_groups = [aws_security_group.albsg.id]
+        description = "test"
+    } 
     
     egress {
         description = "for all outgoing traffic"
