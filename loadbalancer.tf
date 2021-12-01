@@ -25,7 +25,7 @@ resource "aws_lb" "myalb" {
 resource "aws_lb_target_group" "mytg-images" {
     health_check {
         interval = 10
-        path = "/images"
+        path = "/images/image1"
         protocol = "HTTP"
         timeout = 5
         healthy_threshold = 5
@@ -80,7 +80,7 @@ resource "aws_alb_target_group_attachment" "ec2_web1_attach" {
 resource "aws_lb_target_group" "mytg-logfiles" {
     health_check {
         interval = 10
-        path = "/logfiles"
+        path = "/logfiles/log1"
         protocol = "HTTP"
         timeout = 5
         healthy_threshold = 5
