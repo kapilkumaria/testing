@@ -1,3 +1,7 @@
+provider "aws" {
+    region = "us-east-1"
+}
+
 resource "aws_dynamodb_table" "dynamo-db-terrafrom-lock" {
     name = "terraform-lock"
     hash_key = "LockID"
