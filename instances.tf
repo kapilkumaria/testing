@@ -1,5 +1,5 @@
 resource "aws_instance" "bastionec2" {
-    count = var.env-bastion == "dev" ? 1 : 0
+    #count = var.env-bastion == "dev" ? 1 : 0
 
     ami = lookup(var.ec2-ami,var.region)
     instance_type = var.instance-type
@@ -50,7 +50,7 @@ resource "aws_instance" "webserver2" {
 }    
 
 resource "aws_instance" "dbserver1" {
-    count = var.env-db == "db" ? 1 : 0
+    #count = var.env-db == "db" ? 1 : 0
 
     ami = lookup(var.ec2-ami,var.region)
     instance_type = var.instance-type
@@ -66,7 +66,7 @@ resource "aws_instance" "dbserver1" {
 }    
 
 resource "aws_instance" "dbserver2" {
-    count = var.env-db == "db" ? 1 : 0
+    #count = var.env-db == "db" ? 1 : 0
 
     ami = lookup(var.ec2-ami,var.region)
     instance_type = var.instance-type
